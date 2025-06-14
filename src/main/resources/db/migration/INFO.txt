@@ -1,0 +1,16 @@
+
+Caso a migration tenha algum tipo de erro de sintaxe, será apresentado no terminal o seguinte erro:
+    "Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.
+    factory.BeanCreationException: Error creating bean with name 'flywayInitializer' defined in class path resource
+    [org/springframework/boot/autoconfigure/flyway/FlywayAutoConfiguration$FlywayConfiguration.class]: Validate
+    failed: Migrations have failed validation"
+Para que vc possa alterar a migration e executa-la novamente deveremos executar o seguinte comando, pois como visto antes,
+depois de uma vez tentada ser executada nós não podemos simplemente alterar e tentar executar novamente então o co-
+mando seguinte faz com que o flyway apague/resete as tentativas de executar uma migration que por ventura veio a fa-
+lhar.
+    delete from flyway_schema_history where success = 0;
+
+Exceção: Pode acontecer do comando criar uma tabela ou coluna no banco, se foi colocada errôneamente, o sistema irá
+esse comando não irá deletar/apagar essa coluna ou tabaela, sendo assim será necessário apagar o database.
+    drop database vollmed_api;
+    create database vollmed_api;
